@@ -1,0 +1,76 @@
+//
+// Name: Je Seung You
+// UNI: jy2908
+//
+// this class contains the information of Player, such as hand, bets, and bankroll.
+
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class Player {
+		
+	private ArrayList<Card> hand; // the player's cards
+	private double bankroll;
+    private double bet;
+
+	// you may choose to use more instance variables
+		
+	public Player(){		
+	    // create a player here
+		this.hand = new ArrayList<>();
+		this.bankroll = 0;
+		this.bet = 0;
+	}
+
+	public void addCard(Card c){
+	    // add the card c to the player's hand
+		this.hand.add(c);
+	}
+
+	public void removeCard(Card c){
+	    // remove the card c from the player's hand
+		this.hand.remove(c);
+    }
+	
+    public void bets(double amt){
+        // player makes a bet
+    	this.bet = amt;
+    }
+
+    public void winnings(double odds){
+        //	adjust bankroll if player wins
+    	this.bankroll += (odds * bet);
+    }
+
+    public double getBankroll(){
+        // return current balance of bankroll
+    	return this.bankroll;
+    }
+
+    // you may wish to use more methods here
+
+    
+    public ArrayList<Card> getHand() {
+    	return this.hand;
+    }
+    
+    public Card getCard(int index) {
+    	return hand.get(index);
+    }
+    
+    public void discardAll() {
+    	hand.clear();
+    }
+
+    public void sortHand() {
+    	Collections.sort(this.hand);
+    }
+
+    
+    public void showHand() {
+    	for(int i = 0; i < hand.size(); i++) {
+    		System.out.print("| " + (i+1) + ". " + hand.get(i).toString() + " |");
+    	}
+    	System.out.println();
+    }
+}
