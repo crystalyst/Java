@@ -1,0 +1,44 @@
+//
+// Name: Je Seung You
+// UNI: jy2908
+// Date: November 2 2018
+//
+// This class represents the deck that consists of 52 poker cards
+
+public class Deck {
+	
+	private Card[] cards;
+	private int top; // the index of the top of the deck
+	
+	public Deck(){
+        cards = new Card[52];
+        int idx = 0;
+        for(int i = 1; i <= 4; i++){
+            for(int j = 1; j <= 13; j++){
+                cards[idx++] = new Card(i,j);
+            }
+        }
+        this.top = 51;
+        shuffle();
+	}
+	
+	public void shuffle(){
+        Card temp;
+        int rand_i;
+        for(int i = 0; i < this.top; i++){
+            rand_i = (int) (Math.random()*(this.top + 1));
+            temp = cards[i];
+            cards[i] = cards[rand_i];
+            cards[rand_i] = temp;
+        }
+	}
+	
+	public Card deal(){
+        return cards[this.top--];
+	}
+	
+    public int getTop(){
+        return this.top;
+    }
+
+}
