@@ -1,0 +1,34 @@
+/*****************************************
+ * A template for a Human Nim player
+ * Human player class that plays against computer player in Nim game.
+ * this class designates the number of marbles according to the user's input.
+ * 
+ * @author Je Seung You / UNI jy2908
+ 
+ ****************************************/ 
+import java.util.Scanner;
+
+public class Human{
+   
+    private int choice;
+    private Scanner input;
+    
+    public Human(){
+        input=new Scanner(System.in);
+        choice = -1;
+    }
+    
+    public void move(){
+      if (input.hasNextInt()){
+        choice = input.nextInt();
+      } else {
+        choice = -1;
+      }      
+    }
+ 
+    public int getChoice(){
+        return choice;
+    }
+    
+    
+}
