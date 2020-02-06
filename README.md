@@ -24,3 +24,56 @@ void move(int marblesLeft) - the method that decides choice(the number of marble
 - Human class
 
 void move() - the method that stores the user's input into choice. I designed this to store initial value = -1, if the input is not an integer.
+
+
+<strong> 2. Poker Game (Using the tester file provided by Prof. Adam Cannon) - <i>all codes are located under Poker Game Repository</i> </strong>
+
+1. Card Class
+
+final String str_suit[] - To convert suit that is integer data type into String.
+The reason why I did not choose to convert into character is that it is easy to use String in order to utilize
+toString() method.
+
+CompareTo() - In order to sort player's hand later, I decided to use CompareTo() method.
+I designed this code to be sorted by ascending order.
+
+ToString() - I used this method to create String that each represents a poker card. e.g. h1, h2
+Initially, there are suits and ranks given in integer data types, but by utilizing this method, these two
+integers could form one String that is equivalent to a poker card.
+
+2. Deck Class
+
+Deck() - Constructor. It is for assigning all 52 poker cards seperately for each 52 spots of poker card deck.
+
+Shuffle() - It swaps 52 cards in a random way by using Math.random() method
+
+3. Player Class
+
+addCard() - add Card to hand, which is an ArrayList.
+
+removeCard() - remove Card from hand, which is an ArrayList.
+
+winnings() - it stores the value of bets * payout to bankroll.
+
+discardAll() - By using the method clear(), it remove all cards that hand currently has.
+
+sortHand() - it is possible to sort hand by using Collections.sort(). In this sense, CompareTo() method
+that is in Card class is used 
+
+4. Game Class
+
+Game(String[] testHand) - Initialize player's hand(init hand) by testhand that is parameter of constructor
+
+Game() - constructor. It consist of deck, and picks up 5 cards from the shuffled deck in order to form player's hand.
+
+play() - the method that runs the game overall. In this method, player can change the card in one's hand until one reveals them.
+
+checkHand() - the method evaluates hand of player, and return String. e.g. "One Pair!"
+
+checkPair() - receive ArrayList hand as a parameter, and count how many cards that have same rank in the hand.
+e.g. One Pair, Two Pair, Three of a Kind, Full House, Four of a Kind
+
+checkStraight() - To evaluate whether or not hand is straight. From the beginning of the index, this method checks if rank increments by 1 as index increments by 1.
+return 0; - No Straight / return 1; - Straight / return 2; - Royal Straight
+
+checkFlush() - this method compares all suits in hand. If all suits have the same value = True, if any of them are different than others = False.
