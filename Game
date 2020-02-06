@@ -1,0 +1,205 @@
+//
+// Name: Je Seung You
+// UNI: jy2908
+//
+// This class takes care of overall process, and this initializes Player and Deck.
+
+import java.util.ArrayList;
+import java.util.Scanner;
+
+public class Game {
+	
+	private Player p;
+	private Deck cards;
+    private double payout;
+	// you'll probably need some more here
+	
+	public Game(String[] testHand){
+		// This constructor is to help test your code.
+		// use the contents of testHand to
+		// make a hand for the player
+		// use the following encoding for cards
+		// c = clubs
+		// d = diamonds
+		// h = hearts
+		// s = spades
+		// 1-13 correspond to ace-king
+		// example: s1 = ace of spades
+		// example: testhand = {s1, s13, s12, s11, s10} = royal flush
+		
+		p = new Player();
+        cards = new Deck();
+        this.payout = 0;
+        initPlayerHand(testHand);
+	}
+	
+	public Game(){
+		// This no-argument constructor is to actually play a normal game
+		p = new Player();
+        cards = new Deck();
+        this.payout = 0;
+        initPlayerHand();
+	}
+	
+	public void play(){
+		// this method should play the game	
+		Scanner scan = new Scanner(System.in);
+        System.out.println("Game Start!");
+        int command = -1;
+        System.out.print("bet tokens!(1~5) : ");
+        double bet = scan.nextDouble();
+        p.bets(bet);
+        
+        while(command != 1 && cards.getTop() >= 0){
+            System.out.println("Player's Hand");
+            p.sortHand();
+            p.showHand();
+            System.out.println("-----------------------------------------");
+            System.out.println("1. Discard None. Check the Player's Hand");
+            System.out.println("2. Discard Some.");
+            System.out.println("3. Discard All. Reset the Player's Hand");
+            System.out.println("-----------------------------------------");
+            System.out.print("Select : ");
+            command = scan.nextInt();
+            
+            if(command == 2){
+                System.out.print("The number of card to discard(1~5) : ");
+                int num = scan.nextInt();
+                p.removeCard(p.getCard(num-1));
+                p.addCard(cards.deal());
+            }else if(command == 3){
+                p.discardAll();
+                initPlayerHand();
+            }
+        }
+        System.out.println("the Player has a " + checkHand(p.getHand()));
+        p.winnings(this.payout);
+        System.out.println("the bankroll of Player is ..... " + p.getBankroll() + "!!!");
+	}
+	
+	public String checkHand(ArrayList<Card> hand){
+		// this method should take an ArrayList of cards
+		// as input and then determine what evaluates to and
+		// return that as a String
+		
+        int pairValue = checkPair(hand);
+        int isStraight = checkStraight(hand);
+        boolean isFlush = checkFlush(hand);
+		
+        if(pairValue == 1){
+            this.payout = 1;
+            return "One Pair";
+        }
+        else if(pairValue == 2){
+            this.payout = 2;
+            return "Two Pair";
+        }        
+        else if(pairValue == 3){
+            this.payout = 3;
+            return "Three of a Kind";
+        }
+        else if(pairValue == 4){
+            this.payout = 6;
+            return "Full House";
+        }
+        else if(pairValue == 6){
+            this.payout = 25;
+            return "Four of a Kind";
+        }
+        
+        if(isFlush == true){
+            if(isStraight == 0){
+                this.payout = 5;
+                return "Flush";
+            }
+            else if(isStraight == 1){
+                this.payout = 50;
+                return "Straight Flush";
+            }
+            else if(isStraight == 2){
+                this.payout = 250;
+                return "Royal Flush";
+            }
+        }else{
+            if(isStraight > 0){
+                this.payout = 4;
+                return "Straight";
+            }
+        }
+        return "No Pair";
+	}
+	
+	
+	// you will likely want many more methods here
+	// per discussion in class
+	
+    public int checkPair(ArrayList<Card> hand){
+        int count = 0;
+        for(int i = 0; i < hand.size() - 1; i++){
+            for(int j = i + 1; j < hand.size(); j++){
+                if(hand.get(i).getRank() == hand.get(j).getRank()){
+                    count++;
+                }
+            
+            }
+        }
+        return count;
+    }
+    
+    public int checkStraight(ArrayList<Card> hand){
+        boolean isStraight = true;
+        
+        if(hand.get(0).getRank() == 1 && hand.get(1).getRank() == 10){
+            for(int i = 1; i < hand.size() - 1; i++){
+                if(hand.get(i).getRank() + 1 != hand.get(i+1).getRank()){
+                    isStraight = false;
+                    break;
+                }
+            }
+            if(isStraight){
+                return 2;
+            }
+        }
+        for(int i = 0; i < hand.size() - 1; i++){
+            if(hand.get(i).getRank() + 1 != hand.get(i+1).getRank()){
+                isStraight = false;
+                break;
+            }
+        }
+        
+        if(isStraight){
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
+    
+    public boolean checkFlush(ArrayList<Card> hand){
+        int suit = hand.get(0).getSuit();
+        
+        for(int i = 1; i < hand.size(); i++){
+            if(suit != hand.get(i).getSuit()){
+                return false;
+            }
+        }
+        return true;
+    }
+    
+    public void initPlayerHand(){
+        for(int i = 0; i < 5; i++){
+            p.addCard(cards.deal());
+        }
+    }
+    
+    private void initPlayerHand(String[] testHand){
+        String suits = "cdhs";
+        int suit = -1;
+        int rank = -1;
+        for(int i = 0; i < testHand.length; i++){
+            suit = suits.indexOf(testHand[i].charAt(0)) +1;
+            rank = Integer.parseInt(testHand[i].substring(1,testHand[i].length()));
+            p.addCard(new Card(suit, rank));
+        }
+    }
+}
