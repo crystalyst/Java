@@ -25,7 +25,7 @@ void move(int marblesLeft) - the method that decides choice(the number of marble
 
 void move() - the method that stores the user's input into choice. I designed this to store initial value = -1, if the input is not an integer.
 
-============================================================================================================
+======================================================================================
 
 <strong> 2. Poker Game (Using the tester file provided by Prof. Adam Cannon) - <i>all codes are located under Poker Game Repository</i> </strong>
 
