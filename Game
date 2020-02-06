@@ -1,0 +1,68 @@
+//******************************
+//	A template for a Nim game
+//
+// @author Je Seung You / UNI jy2908
+//******************************
+
+public class Game {
+  
+    private int marbles;
+    private Human humanPlayer;  //human player 
+    private Computer computerPlayer;  //computer player
+
+    public Game(int difficulty){
+      marbles = getRandomValue(10, 100);
+      humanPlayer = new Human();
+      computerPlayer = new Computer(difficulty);
+    }
+
+    public void play() {
+      int turnNumber = getRandomValue(0, 1);
+      int playerChoice;
+      
+      while (marbles > 0){
+        System.out.println("\n" + marbles + " marbles left. Enter the number of marbles to bring.");
+      
+        if (turnNumber == 0){
+          System.out.print("Human> ");
+          humanPlayer.move();
+          playerChoice = humanPlayer.getChoice();
+        } else {
+          System.out.print("Computer> ");
+          computerPlayer.move(marbles);
+          playerChoice = computerPlayer.getChoice();
+          System.out.println(playerChoice);
+        }
+        
+        if (updateMarbles(playerChoice)){
+          turnNumber ^= 1;
+        } else { 
+          System.out.println("Not correct input.");
+        }
+      }
+      
+      printWinner(turnNumber);
+    }
+  
+    private int getRandomValue(int min, int max){
+      return (int)(Math.random()*(max - min + 1)) + min;
+    }
+    private boolean updateMarbles(int playerChoice){
+      if ((playerChoice > 0 && playerChoice <= marbles / 2 || (playerChoice == 1 && marbles == 1) )){
+        marbles -= playerChoice;
+        return true;
+      } else {
+        return false;
+      }
+    }
+    private void printWinner(int lastTurnNumber){
+      String winnerName;
+      if (lastTurnNumber == 0){
+        winnerName = "Human";
+      } else {
+        winnerName = "Computer";
+      }
+      System.out.println("\n" + winnerName + " win !!");
+    }
+   
+} // end class  
