@@ -1,7 +1,7 @@
 # Java
 Repository for self-studying Java
 
-1. Nim game (Using the tester file provided by Prof. Adam Cannon) - all codes are located under Nim-Game Repository
+<strong> 1. Nim game (Using the tester file provided by Prof. Adam Cannon) - <i>all codes are located under Nim-Game Repository</i> </strong>
 
 - Game Class
 
