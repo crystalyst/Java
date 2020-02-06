@@ -1,0 +1,59 @@
+/*****************************************
+ * A template for a computer Nim player
+ * This class is Computer player class that is against human player in Nim game.
+ * stupid mode chooses the number of marbles randomly when calling move() method.
+ * smart mode chooses the number of mables that can win the game.
+ * if there is no case found to win the game in smart mode, the class works in stupid mode.
+ *
+ * @author Je Seung You / UNI jy2908
+ 
+ ****************************************/ 
+
+public class Computer{
+    private int mode;
+    private int choice;
+    
+    public Computer(int m){
+        mode = m;
+        choice = -1;
+    }
+    
+    public void move(int marblesLeft){
+      
+      if (mode == 2) {
+        choice = findSmartChoice(marblesLeft);
+      } else {
+        choice = getStupidChoice(marblesLeft);
+      }
+    }
+      
+      private int findSmartChoice(int marblesLeft){
+        int result = 0;
+        int max = marblesLeft / 2;
+        
+        if (max == 0){
+          result = 1;
+        } else {
+          for (int i=5; i>=0; --i){
+            result = marblesLeft - ((2<<i) - 1);
+            
+            if (result > 0 && result <= max) {
+              break;
+            }
+            
+          }
+          if (result > max){
+            result = getStupidChoice(marblesLeft);
+          } 
+        }
+        return result;
+      }
+    
+    private int getStupidChoice(int marblesLeft){
+      return (int)(Math.random() * (marblesLeft / 2)) + 1;  
+    }
+  
+    public int getChoice(){
+        return choice;
+    }   
+}
