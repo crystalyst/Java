@@ -25,10 +25,11 @@ void move(int marblesLeft) - the method that decides choice(the number of marble
 
 void move() - the method that stores the user's input into choice. I designed this to store initial value = -1, if the input is not an integer.
 
+============================================================================================================
 
 <strong> 2. Poker Game (Using the tester file provided by Prof. Adam Cannon) - <i>all codes are located under Poker Game Repository</i> </strong>
 
-1. Card Class
+- Card Class
 
 final String str_suit[] - To convert suit that is integer data type into String.
 The reason why I did not choose to convert into character is that it is easy to use String in order to utilize
@@ -41,13 +42,13 @@ ToString() - I used this method to create String that each represents a poker ca
 Initially, there are suits and ranks given in integer data types, but by utilizing this method, these two
 integers could form one String that is equivalent to a poker card.
 
-2. Deck Class
+- Deck Class
 
 Deck() - Constructor. It is for assigning all 52 poker cards seperately for each 52 spots of poker card deck.
 
 Shuffle() - It swaps 52 cards in a random way by using Math.random() method
 
-3. Player Class
+- Player Class
 
 addCard() - add Card to hand, which is an ArrayList.
 
@@ -60,7 +61,7 @@ discardAll() - By using the method clear(), it remove all cards that hand curren
 sortHand() - it is possible to sort hand by using Collections.sort(). In this sense, CompareTo() method
 that is in Card class is used 
 
-4. Game Class
+- Game Class
 
 Game(String[] testHand) - Initialize player's hand(init hand) by testhand that is parameter of constructor
 
